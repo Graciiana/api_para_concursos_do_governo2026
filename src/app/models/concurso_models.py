@@ -14,7 +14,7 @@ class Concurso(Base):
     titulo: Mapped[str] = mapped_column(String(50), nullable=False)
     descricao: Mapped[str]
 
-    creado_em: Mapped[datetime] = mapped_column(
+    criado_em: Mapped[datetime] = mapped_column(
         DateTime, default=lambda: datetime.now(UTC)
     )
     actualizado_em: Mapped[datetime] = mapped_column(

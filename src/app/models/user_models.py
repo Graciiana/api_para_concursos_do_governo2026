@@ -1,11 +1,16 @@
 from datetime import datetime, UTC
+from enum import StrEnum
 
-from sqlalchemy import String, Integer, DateTime
+from sqlalchemy import String, Integer, DateTime, Enum as SqlEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.db import Base
 from models import candidato_models
 
+
+class RoleEnum(StrEnum):
+    USER = "user"
+    ADMIN = "admin"
 
 
 class User(Base):
@@ -16,7 +21,9 @@ class User(Base):
     nome: Mapped[str] = mapped_column(String(50), nullable=False)
     email: Mapped[str] = mapped_column(String(14), unique=True)
     password: Mapped[str] = mapped_column(String(200)) 
-    creado_em: Mapped[datetime] = mapped_column(
+    role: Mapped[RoleEnum] = mapped_column(SqlEnum(RoleEnum), default=RoleEnum.USER)
+
+    criado_em: Mapped[datetime] = mapped_column(
         DateTime, default=lambda: datetime.now(UTC)
     )
     actualizado_em: Mapped[datetime] = mapped_column(

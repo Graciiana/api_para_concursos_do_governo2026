@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "B0NvIGM_-ns3krNLE6jhW",
+      "type": "text",
+      "x": 237.4022674560547,
+      "y": 132.6668701171875,
+      "width": 888.859130859375,
+      "height": 100,
+      "angle": 0,
+      "strokeColor": "#f08c00",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "a8",
+      "roundness": null,
+      "seed": 517542182,
+      "version": 250,
+      "versionNonce": 1613045606,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1786657574251,
+      "link": null,
+      "locked": false,
+      "text": "Para routas em que e necessario que haja \na autenticacao do por parte dio admin, e necessario\nque o se faca inicialmente uma verificacao, para saber se é mesmo o admin ou um user nomal\n",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Para routas em que e necessario que haja \na autenticacao do por parte dio admin, e necessario\nque o se faca inicialmente uma verificacao, para saber se é mesmo o admin ou um user nomal\n",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#18181818"
+  },
+  "files": {}
+}
