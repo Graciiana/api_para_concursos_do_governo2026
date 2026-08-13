@@ -4,4 +4,4 @@ from app.database.db import Base, engine
 
 app = FastAPI()
 
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
