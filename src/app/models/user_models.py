@@ -1,11 +1,10 @@
 from datetime import datetime, UTC
 from enum import StrEnum
 
-from sqlalchemy import String, Integer, DateTime, Enum as SqlEnum
+from sqlalchemy import String, DateTime, Enum as SqlEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from database.db import Base
-from models import candidato_models
+from app.database.db import Base
 
 
 class RoleEnum(StrEnum):
@@ -30,4 +29,4 @@ class User(Base):
         DateTime, default=lambda: datetime.now(UTC)
     )
 
-    candidato: Mapped[candidato_models.Candidato] = relationship("Candidato", back_populates="user")
+    candidato = relationship("Candidato", back_populates="user")

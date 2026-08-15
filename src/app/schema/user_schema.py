@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, EmailStr
 
-from models.user_models import RoleEnum
+from app.models.user_models import RoleEnum
 
 
 class UserSchema(BaseModel):

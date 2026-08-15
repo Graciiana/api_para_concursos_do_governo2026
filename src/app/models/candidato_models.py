@@ -4,8 +4,7 @@ from enum import StrEnum
 from sqlalchemy import String, Integer, Float, Enum as sqlEnum, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from database.db import Base
-from models import candidatura_models,_models, user_models
+from app.database.db import Base
 
 
 class NivelAcademicoEnum(StrEnum):
@@ -34,8 +33,8 @@ class Candidato(Base):
     )
     id_user: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
-    user: Mapped[user_models.User] = relationship("User", back_populates="candidato")
-    candidaturas: Mapped[candidatura_models.Candidatura] = relationship("Candidaturas", back_populates="candidato")
+    user = relationship("User", back_populates="candidato")
+    candidaturas = relationship("Candidaturas", back_populates="candidato")
 
 
     @property

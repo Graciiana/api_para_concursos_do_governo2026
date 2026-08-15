@@ -3,8 +3,7 @@ from datetime import datetime, UTC
 from sqlalchemy import String,DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from database.db import Base
-from models import candidatura_models
+from app.database.db import Base
 
 class Concurso(Base):
     __tablename__ = "concursos"
@@ -21,4 +20,4 @@ class Concurso(Base):
         DateTime, default=lambda: datetime.now(UTC)
     )
 
-    candidaturas: Mapped[candidatura_models.Candidaturas] = relationship("Candidaturas", back_populates="concurso")
+    candidaturas = relationship("Candidatura", back_populates="concurso")
