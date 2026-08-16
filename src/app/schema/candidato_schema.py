@@ -6,7 +6,7 @@ from models.candidato_models import NivelAcademicoEnum
 
 
 class CandidatoSchema(BaseModel):
-    nome: str = Field(min_length=10, max_length=50)
+    nome: str = Field(min_length=5, max_length=50)
     bi: str = Field(max_length=15)
     media: float
     curso: str = Field(min_length=10, max_length=100)

@@ -6,7 +6,7 @@ from app.models.user_models import RoleEnum
 
 
 class UserSchema(BaseModel):
-    nome: str = Field(min_length=10, max_length=50)
+    nome: str = Field(min_length=5, max_length=50)
     email: EmailStr
     password: str = Field(max_length=8)
     criado_em: datetime
