@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database.db import get_session_db
-from app.models.user_models import User
+from app.models.models import User
 from app.schema.user_schema import CriarUserSchema, UserSchemaResponse
 
 # ActualizarUserSchema
