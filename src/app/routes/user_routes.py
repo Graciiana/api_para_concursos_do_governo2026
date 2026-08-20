@@ -59,10 +59,11 @@ def user_login(
 
     if not user_existente:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Emal encorrecto"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Emal incorrecto"
         )
 
-    if not verificar_senha(dados_login.password, user_existente.password):
+    senha = verificar_senha(dados_login.password, user_existente.password)
+    if not senha:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Senha inválida"
         )
@@ -108,7 +109,6 @@ def actualizar_user(
 
 
 # Autorizado apenas para o admin - ver listas dos users
-
 
 @router.get("/lista", response_model=list[UserSchemaResponse])
 def get_users(

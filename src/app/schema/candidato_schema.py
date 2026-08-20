@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from models.candidato_models import NivelAcademicoEnum
+from app.models.models import NivelAcademicoEnum
 
 
 class CandidatoSchema(BaseModel):
@@ -11,20 +11,19 @@ class CandidatoSchema(BaseModel):
     media: float
     curso: str = Field(min_length=10, max_length=100)
     nivel_academico: NivelAcademicoEnum = NivelAcademicoEnum.ENSINO_MEDIO
-    criado_em: datetime
-    actualizado_em: datetime
 
 
 class CriarCandidatoSchema(CandidatoSchema):
+    criado_em: datetime
     data_nascimento: datetime
 
 
 class ActualizarCandidatoSchema(BaseModel):
-    nome: str | None = Field(default=None,min_length=10, max_length=50)
-    bi: str | None = Field(default=None,max_length=15)
-    media: float | None
+    nome: str | None = Field(default=None, min_length=10, max_length=50)
+    bi: str | None = Field(default=None, max_length=15)
+    media: float | None = None
     curso: str | None = Field(default=None, min_length=10, max_length=100)
-    nivel_academico: NivelAcademicoEnum | None
+    nivel_academico: NivelAcademicoEnum | None = None
     actualizado_em: datetime
 
 

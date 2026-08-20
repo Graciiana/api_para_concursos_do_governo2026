@@ -1,0 +1,58 @@
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from app.database.db import get_session_db
+from app.models.models import Candidato, User
+from app.schema.candidato_schema import (
+    ActualizarCandidatoSchema,
+    CriarCandidatoSchema,
+    CandidatoSchemaResponse,
+)
+from app.util.util_auth import gerar_token, verificar_jwt
+
+
+router_candidato = APIRouter()
+security = HTTPBearer()
+
+
+@router_candidato.post(
+    "/cadastrar",
+    response_model=CandidatoSchemaResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+def cadastrar_candidato(
+    dado_candidato: CriarCandidatoSchema,
+    session: Annotated[Session, Depends(get_session_db)],
+    credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
+):
+
+    token = credentials.credentials
+    pyload = verificar_jwt(token)
+
+    user = session.execute(
+        select(User).where(User.email == pyload.get("email"))
+    ).scalar_one()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Candidato não autorizado"
+        )
+
+    candidato = session.execute(
+        select(Candidato).where(Candidato.id_user == user.id)
+    ).scalar_one_or_none()
+    if candidato:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Candidato já cadastrado"
+        )
+
+    candidato_dado = Candidato(**dado_candidato.model_dump())
+    session.add(candidato_dado)
+    session.commit()
+    session.refresh(candidato_dado)
+
+    return candidato_dado
