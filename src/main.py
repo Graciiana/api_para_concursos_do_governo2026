@@ -13,7 +13,7 @@ app = FastAPI()
 
 app.include_router(router=router, prefix="/user", tags=["Usuarios"])
 app.include_router(router=router_candidato, prefix="/candidato", tags=["Candidatos"])
-# Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
 
 
 

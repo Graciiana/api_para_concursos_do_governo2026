@@ -14,7 +14,7 @@ from app.schema.user_schema import (
 )
 from app.schema.login_schema import LoginSchema, Token
 from app.util.util_auth import gerar_token, verificar_jwt
-from app.util.util_hash import gerar_hash, verificar_senha
+from app.util.util_hash import gerar_hash, verifica_senha
 
 
 # ActualizarUserSchema
@@ -61,9 +61,8 @@ def user_login(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Emal incorrecto"
         )
-
-    senha = verificar_senha(dados_login.password, user_existente.password)
-    if not senha:
+    # breakpoint()
+    if not verifica_senha(dados_login.password, user_existente.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Senha inválida"
         )
@@ -109,6 +108,7 @@ def actualizar_user(
 
 
 # Autorizado apenas para o admin - ver listas dos users
+
 
 @router.get("/lista", response_model=list[UserSchemaResponse])
 def get_users(

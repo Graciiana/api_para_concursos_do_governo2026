@@ -22,7 +22,6 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    nome: Mapped[str] = mapped_column(String(50), nullable=False)
     email: Mapped[str] = mapped_column(String(14), unique=True)
     password: Mapped[str] = mapped_column(String(200))
     role: Mapped[RoleEnum] = mapped_column(SqlEnum(RoleEnum), default=RoleEnum.USER)
