@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from pydantic import BaseModel, Field
 
@@ -14,8 +14,10 @@ class CandidatoSchema(BaseModel):
 
 
 class CriarCandidatoSchema(CandidatoSchema):
-    criado_em: datetime
-    data_nascimento: datetime
+    data_nascimento: date
+    # id_user: int
+    
+    
 
 
 class ActualizarCandidatoSchema(BaseModel):
@@ -24,7 +26,7 @@ class ActualizarCandidatoSchema(BaseModel):
     media: float | None = None
     curso: str | None = Field(default=None, min_length=10, max_length=100)
     nivel_academico: NivelAcademicoEnum | None = None
-    actualizado_em: datetime
+    actualizado_em: datetime | None = None
 
 
 class CandidatoSchemaResponse(CandidatoSchema):

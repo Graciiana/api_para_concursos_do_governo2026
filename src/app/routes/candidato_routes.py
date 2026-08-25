@@ -32,10 +32,11 @@ def cadastrar_candidato(
 
     token = credentials.credentials
     pyload = verificar_jwt(token)
+    # buscar user com um certo id e guardar nos candidatos
 
     user = session.execute(
         select(User).where(User.email == pyload.get("email"))
-    ).scalar_one()
+    ).scalar_one_or_none()
 
     if not user:
         raise HTTPException(
@@ -47,10 +48,10 @@ def cadastrar_candidato(
     ).scalar_one_or_none()
     if candidato:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Candidato já cadastrado"
+            status_code=status.HTTP_409_CONFLICT, detail="Candidato já cadastrado"
         )
 
-    candidato_dado = Candidato(**dado_candidato.model_dump())
+    candidato_dado = Candidato(**dado_candidato.model_dump(), id_user=user.id)
     session.add(candidato_dado)
     session.commit()
     session.refresh(candidato_dado)

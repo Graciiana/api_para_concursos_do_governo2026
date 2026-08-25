@@ -1,7 +1,7 @@
-from datetime import datetime, UTC
+from datetime import datetime, date, UTC
 from enum import StrEnum
 
-from sqlalchemy import String, Integer, Float, Enum as SqlEnum, DateTime, ForeignKey
+from sqlalchemy import String, Enum as SqlEnum, Date, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.db import Base
@@ -44,7 +44,7 @@ class Candidato(Base):
 
     nome: Mapped[str] = mapped_column(String(50), nullable=False)
     bi: Mapped[str] = mapped_column(String(14), unique=True)
-    data_nascimento: Mapped[datetime] = mapped_column(DateTime)
+    data_nascimento: Mapped[date] = mapped_column(Date)
     media: Mapped[float]
     curso: Mapped[str] = mapped_column(String(100))
     nivel_academico: Mapped[NivelAcademicoEnum] = mapped_column(
