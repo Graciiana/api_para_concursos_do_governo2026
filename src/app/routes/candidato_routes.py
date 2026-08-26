@@ -57,3 +57,43 @@ def cadastrar_candidato(
     session.refresh(candidato_dado)
 
     return candidato_dado
+
+
+@router_candidato.post("/id/actualizar", response_model=CandidatoSchemaResponse)
+def actualizar_candidato(
+    id: int,
+    credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
+    dados_candidato: ActualizarCandidatoSchema,
+    session: Annotated[Session, Depends(get_session_db)],
+):
+    token = credentials.credentials
+    pyload = verificar_jwt(token)
+
+    user = session.execute(
+        select(User).where(User.email == pyload.get("email"))
+    ).scalar_one_or_none()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario nao autorizado"
+        )
+
+    candidato = session.execute(
+        select(Candidato).where(Candidato.id == id)
+    ).scalar_one_or_none()
+
+    if not candidato:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Candidato não encontrado"
+        )
+
+    actualizar_candidato = dados_candidato.model_dump(exclude_unset=True)
+
+    for chave, valor in actualizar_candidato.items():
+        setattr(candidato, chave, valor)
+    session.commit()
+    session.refresh(candidato)
+    return candidato
+
+
+

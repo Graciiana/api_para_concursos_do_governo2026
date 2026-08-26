@@ -59,7 +59,7 @@ def user_login(
 
     if not user_existente:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Emal incorrecto"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Email incorrecto"
         )
     # breakpoint()
     if not verifica_senha(dados_login.password, user_existente.password):
@@ -86,7 +86,7 @@ def actualizar_user(
 
     user = session.execute(
         select(User).where(User.email == pyload.get("email"))
-    ).scalar_one()
+    ).scalar_one_or_none()
 
     if not user:
         raise HTTPException(
