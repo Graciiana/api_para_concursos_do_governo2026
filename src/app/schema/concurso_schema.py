@@ -7,7 +7,6 @@ class ConcursoSchema(BaseModel):
 
     titulo: str = Field(min_length=10, max_length=50)
     descricao: str = Field(min_length=10)
-    criado_em: datetime
 
    
 class CriarConcursoSchema(ConcursoSchema):
