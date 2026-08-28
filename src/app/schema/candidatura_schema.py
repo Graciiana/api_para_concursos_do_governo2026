@@ -6,7 +6,6 @@ from pydantic import BaseModel
 class CandidaturaSchema(BaseModel):
     id_candidato: int
     id_concurso: int
-    criado_em: datetime
 
 
 class CriarCandidatoSchema(CandidaturaSchema):

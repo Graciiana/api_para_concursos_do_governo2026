@@ -30,6 +30,6 @@ class ActualizarCandidatoSchema(BaseModel):
 
 
 class CandidatoSchemaResponse(CandidatoSchema):
-    id: int
     idade: int
+    id: int
     id_user: int

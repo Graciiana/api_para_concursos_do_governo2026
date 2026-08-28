@@ -96,4 +96,25 @@ def actualizar_candidato(
     return candidato
 
 
+@router_candidato.get("/lista", response_model=list[CandidatoSchemaResponse])
+def get_all_candidatos(
+    credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
+    session: Annotated[Session, Depends(get_session_db)],
+):
+    token = credentials.credentials
+    pyload = verificar_jwt(token)
+
+    user = session.execute(
+        select(User).where(User.email == pyload.get("email"), User.role == "admin")
+    ).scalar_one_or_none()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario não autorizado"
+        )
+
+    candidato = session.execute(select(Candidato)).scalars()
+
+    return candidato
+
 

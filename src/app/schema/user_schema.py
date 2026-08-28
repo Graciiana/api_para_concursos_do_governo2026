@@ -8,7 +8,6 @@ from app.models.models import RoleEnum
 class UserSchema(BaseModel):
     email: EmailStr
     role: RoleEnum = RoleEnum.USER
-    criado_em: datetime
 
 
 class CriarUserSchema(UserSchema):

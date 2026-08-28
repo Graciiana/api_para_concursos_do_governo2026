@@ -7,12 +7,14 @@ from sqlalchemy.orm import Session
 from app.database.db import Base, engine
 from app.routes.user_routes import router
 from app.routes.candidato_routes import router_candidato
+from app.routes.concurso_models import router_concurso
 
 
 app = FastAPI()
 
 app.include_router(router=router, prefix="/user", tags=["Usuarios"])
 app.include_router(router=router_candidato, prefix="/candidato", tags=["Candidatos"])
+app.include_router(router=router_concurso, prefix="/concurso", tags=["Concursos"])
 Base.metadata.create_all(engine)
 
 
