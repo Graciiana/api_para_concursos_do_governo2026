@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
 
@@ -8,20 +6,19 @@ class CandidaturaSchema(BaseModel):
     id_concurso: int
 
 
-class CriarCandidatoSchema(CandidaturaSchema):
+class CriarCandidaturaSchema(CandidaturaSchema):
     pass
 
 
-class ActualizarCandidaturaSchema(BaseModel):
-    id_candidato: int | None
-    id_concurso: int | None
-    actualizado_em: datetime
-
-
-class CandidatoSchemaResponse(CandidaturaSchema):
+class CandidaturaSchemaResponse(CandidaturaSchema):
     id: int
 
 
 class GetCandidatoSchemaResponse(BaseModel):
     nome_candidato: str
-    concurso: list[str]
+    concurso: str
+
+# ADICIONAR 
+class MeCandidaturasResponse(BaseModel):
+    candidato: str
+    concursos: list[str]
