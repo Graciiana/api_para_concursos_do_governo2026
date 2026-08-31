@@ -86,7 +86,7 @@ def criar_candidatura(
 
 
 @router_candidatura.get("/{id}/me", response_model=MeCandidaturasResponse)
-def me_candidaturas(
+def get_me_candidaturas(
     id: int,
     credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
     session: Annotated[Session, Depends(get_session_db)],
@@ -124,7 +124,7 @@ def me_candidaturas(
 
 
 @router_candidatura.get("/todas")
-def todas_as_candidaturas(
+def get_candidaturas(
     credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
     session: Annotated[Session, Depends(get_session_db)],
 ):
@@ -235,5 +235,13 @@ def gerar_pdf(
     )
 
 
-#
+@router_candidatura.get("/{id}/me/resultados")
+def get_me_resultados(
+    id: int,
+    credential: Annotated[HTTPAuthorizationCredentials, Depends(security)],
+    session: Annotated[Session, Depends(get_session_db)],
+):
+    pass
+
+
 # Ver listas de candidaturas feitas e adicionar um campo em que apenas o usuario conegui ver as suas candidaturas

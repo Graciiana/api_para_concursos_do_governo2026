@@ -7,6 +7,8 @@ class ConcursoSchema(BaseModel):
 
     titulo: str = Field(min_length=10, max_length=50)
     descricao: str = Field(min_length=10)
+    numero_vagas: int
+    nota_minima: float
 
    
 class CriarConcursoSchema(ConcursoSchema):
@@ -16,6 +18,8 @@ class CriarConcursoSchema(ConcursoSchema):
 class ActualizarConcursoSchema(BaseModel):
     titulo: str | None = Field(default=None, min_length=10, max_length=50)
     descricao: str | None = Field(default=None, min_length=10)
+    numero_vagas: int | None = None
+    nota_minima: float | None = None
     actualizado_em: datetime
 
 class ConcursoSchemaResponse(ConcursoSchema):

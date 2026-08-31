@@ -1,7 +1,15 @@
 from datetime import datetime, date, UTC
 from enum import StrEnum
 
-from sqlalchemy import String, Enum as SqlEnum, Date, DateTime, ForeignKey
+from sqlalchemy import (
+    String,
+    Enum as SqlEnum,
+    Date,
+    DateTime,
+    Integer,
+    ForeignKey,
+    Float,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.db import Base
@@ -36,7 +44,6 @@ class User(Base):
     candidato = relationship("Candidato", back_populates="user")
 
 
-
 class Candidato(Base):
     __tablename__ = "candidatos"
 
@@ -63,7 +70,6 @@ class Candidato(Base):
         return datetime.now().year - self.data_nascimento.year
 
 
-
 class Candidatura(Base):
     __tablename__ = "candidaturas"
 
@@ -88,6 +94,8 @@ class Concurso(Base):
 
     titulo: Mapped[str] = mapped_column(String(50), nullable=False)
     descricao: Mapped[str]
+    numero_vagas: Mapped[int] = mapped_column(Integer, nullable=False)
+    nota_minima: Mapped[float] = mapped_column(Float, nullable=False)
 
     criado_em: Mapped[datetime] = mapped_column(
         DateTime, default=lambda: datetime.now(UTC)
