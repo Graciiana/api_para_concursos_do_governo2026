@@ -116,5 +116,3 @@ def get_all_candidatos(
     candidato = session.execute(select(Candidato)).scalars()
 
     return candidato
-
-

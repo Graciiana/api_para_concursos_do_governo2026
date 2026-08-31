@@ -53,9 +53,6 @@ class Candidato(Base):
     criado_em: Mapped[datetime] = mapped_column(
         DateTime, default=lambda: datetime.now(UTC)
     )
-    actualizado_em: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(UTC)
-    )
     id_user: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
     user = relationship("User", back_populates="candidato")
