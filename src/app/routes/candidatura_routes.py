@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.responses import FileResponse
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from fpdf import FPDF
 
@@ -241,7 +241,73 @@ def get_me_resultados(
     credential: Annotated[HTTPAuthorizationCredentials, Depends(security)],
     session: Annotated[Session, Depends(get_session_db)],
 ):
-    pass
+    token = credential.credentials
+    pyload = verificar_jwt(token)
 
+    resultados = {}
+    apurado = False
 
-# Ver listas de candidaturas feitas e adicionar um campo em que apenas o usuario conegui ver as suas candidaturas
+    user = session.execute(select(User).where(User.email == pyload.get("email")))
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não autorizado"
+        )
+
+    candidatura = session.execute(
+        select(Candidatura).where(Candidatura.id_candidato == id)
+    ).scalar_one_or_none()
+
+    # Caso o candidato não tenha feito a candidatatura
+    if not candidatura:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Candidatura não encontrado"
+        )
+
+    # Criar uma funcao para fazer o rankeamento, de modo que haja distincao de cada concurso e de numeros de vaga que cada um tem
+
+    # Fazer filtragem por concurso,para que o nuemro de vagas de cada um, seja valorizado
+    raking = (
+        select(
+            Candidatura.id_candidato,
+            Candidatura.id_concurso,
+            Candidato.media,
+            Concurso.titulo,
+            Concurso.numero_vagas,
+            func.row_number()
+            .over(
+                partition_by=Candidatura.id_concurso, order_by=(Candidato.media.desc())
+            )
+            .label("posicao"),
+        )
+        .join(Candidatura.candidato)
+        .join(Candidatura.concurso)
+        .where(Candidato.media >= Concurso.nota_minima)
+    ).subquery()
+
+    candidaturas_apuradas = session.execute(
+        select(raking).where(raking.c.posicao <= raking.c.numero_vagas)
+    ).all()
+
+    if not candidaturas_apuradas:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Nenhuma candidatura encontrada",
+        )
+
+    for i in candidaturas_apuradas:
+        resultados[i.id_candidato] = {
+            "media": i.media,
+            "concursos": [i.titulo],
+        }
+
+    concursos = []
+
+    if id in resultados:
+        apurado = True
+        dados = resultados[id]
+        concursos = dados.get("concursos", [])
+
+    return {"Resultado": "Apurado" if apurado else "Não apurado", "Concuros": concursos}
+
+    # Qual a filidade de fazer autenticação e como é que isso se quais as diversas formas e ferramentas usar para isso?
