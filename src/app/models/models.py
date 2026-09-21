@@ -12,7 +12,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database.db import Base
+from src.app.database.db import Base
 
 
 class NivelAcademicoEnum(StrEnum):
@@ -93,6 +93,7 @@ class Concurso(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     titulo: Mapped[str] = mapped_column(String(50), nullable=False)
+    identificador: Mapped[str] = mapped_column(String(10), nullable=False, unique=True)
     descricao: Mapped[str]
     numero_vagas: Mapped[int] = mapped_column(Integer, nullable=False)
     nota_minima: Mapped[float] = mapped_column(Float, nullable=False)

@@ -8,3 +8,9 @@
 # python
 __pycache__/
 *.pyc
+
+# excalidraw
+schema.excalidraw
+
+# pdf
+concursos2026.pdf

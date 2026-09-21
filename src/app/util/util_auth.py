@@ -1,6 +1,6 @@
 import jwt
 
-from config import settings
+from src.config import settings
 
 
 def gerar_token(email: str) -> str:

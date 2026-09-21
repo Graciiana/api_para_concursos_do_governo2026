@@ -5,14 +5,14 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database.db import get_session_db
-from app.models.models import Candidato, User
-from app.schema.candidato_schema import (
+from src.app.database.db import get_session_db
+from src.app.models.models import Candidato, User
+from src.app.schema.candidato_schema import (
     ActualizarCandidatoSchema,
     CriarCandidatoSchema,
     CandidatoSchemaResponse,
 )
-from app.util.util_auth import gerar_token, verificar_jwt
+from src.app.util.util_auth import gerar_token, verificar_jwt
 
 
 router_candidato = APIRouter()
@@ -40,11 +40,11 @@ def cadastrar_candidato(
 
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Candidato não autorizado"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não autorizado"
         )
 
     candidato = session.execute(
-        select(Candidato).where(Candidato.id_user == user.id)
+        select(Candidato).where(Candidato.bi == dado_candidato.bi)
     ).scalar_one_or_none()
     if candidato:
         raise HTTPException(

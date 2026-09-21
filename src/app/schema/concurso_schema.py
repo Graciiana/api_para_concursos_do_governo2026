@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 class ConcursoSchema(BaseModel):
 
     titulo: str = Field(min_length=10, max_length=50)
+    identificador: str = Field(max_length=10)
     descricao: str = Field(min_length=10)
     numero_vagas: int
     nota_minima: float
@@ -17,6 +18,7 @@ class CriarConcursoSchema(ConcursoSchema):
 
 class ActualizarConcursoSchema(BaseModel):
     titulo: str | None = Field(default=None, min_length=10, max_length=50)
+    identificador: str | None = Field(default= None ,max_length=10)
     descricao: str | None = Field(default=None, min_length=10)
     numero_vagas: int | None = None
     nota_minima: float | None = None

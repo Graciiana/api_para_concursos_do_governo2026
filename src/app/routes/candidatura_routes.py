@@ -8,10 +8,10 @@ from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from fpdf import FPDF
 
-from app.models.models import Candidatura, Candidato, Concurso, User
-from app.database.db import get_session_db
-from app.util.util_auth import verificar_jwt
-from app.schema.candidatura_schema import (
+from src.app.models.models import Candidatura, Candidato, Concurso, User
+from src.app.database.db import get_session_db
+from src.app.util.util_auth import verificar_jwt
+from src.app.schema.candidatura_schema import (
     CriarCandidaturaSchema,
     CandidaturaSchemaResponse,
     MeCandidaturasResponse,
@@ -138,7 +138,7 @@ def get_candidaturas(
 
     if not user:
         raise HTTPException(
-            staus_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não autorizado"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não autorizado"
         )
     candidaturas = session.execute(select(Candidatura)).scalars()
 

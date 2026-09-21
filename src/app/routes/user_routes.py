@@ -5,16 +5,16 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database.db import get_session_db
-from app.models.models import User
-from app.schema.user_schema import (
+from src.app.database.db import get_session_db
+from src.app.models.models import User
+from src.app.schema.user_schema import (
     ActualizarUserSchema,
     CriarUserSchema,
     UserSchemaResponse,
 )
-from app.schema.login_schema import LoginSchema, Token
-from app.util.util_auth import gerar_token, verificar_jwt
-from app.util.util_hash import gerar_hash, verifica_senha
+from src.app.schema.login_schema import LoginSchema, Token
+from src.app.util.util_auth import gerar_token, verificar_jwt
+from src.app.util.util_hash import gerar_hash, verifica_senha
 
 
 # ActualizarUserSchema

@@ -4,11 +4,11 @@ from fastapi import FastAPI
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database.db import Base, engine
-from app.routes.user_routes import router
-from app.routes.candidato_routes import router_candidato
-from app.routes.candidatura_routes import router_candidatura
-from app.routes.concurso_models import router_concurso
+from src.app.database.db import Base, engine
+from src.app.routes.user_routes import router
+from src.app.routes.candidato_routes import router_candidato
+from src.app.routes.candidatura_routes import router_candidatura
+from src.app.routes.concurso_routes import router_concurso
 
 
 

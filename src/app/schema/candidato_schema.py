@@ -2,7 +2,7 @@ from datetime import datetime, date
 
 from pydantic import BaseModel, Field
 
-from app.models.models import NivelAcademicoEnum
+from src.app.models.models import NivelAcademicoEnum
 
 
 class CandidatoSchema(BaseModel):
